@@ -1,9 +1,10 @@
+from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
 class HoumersBaseView(APIView):
-    pass
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class StatusView(HoumersBaseView):

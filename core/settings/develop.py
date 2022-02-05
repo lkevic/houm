@@ -11,3 +11,5 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-rgw9f*!&76od#
 
 DATABASE_URL = os.environ.get('DATABASE_URL', default=f'sqlite:////{BASE_DIR}/db.sqlite3')
 DATABASES['default'] = dj_database_url.config(default=DATABASE_URL)
+
+SHOW_DOCS = True

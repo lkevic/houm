@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'oauth2_provider',
     'rest_framework',
+    'drf_yasg',
     'houmers'
 ]
 
@@ -97,6 +98,17 @@ REST_FRAMEWORK = {
     )
 }
 
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Houm-OAuth2': {
+            'type': 'oauth2',
+            'tokenUrl': '/auth/token/',
+            'flow': 'password'
+        }
+    }
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -123,3 +135,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'houmers.HoumerUser'
 
 API_VERSION = 'v1'
+
+SHOW_DOCS = False

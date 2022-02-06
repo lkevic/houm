@@ -137,3 +137,5 @@ AUTH_USER_MODEL = 'houmers.HoumerUser'
 API_VERSION = 'v1'
 
 SHOW_DOCS = False
+
+ADMIN_GROUP_NAME = 'houmer_admin'

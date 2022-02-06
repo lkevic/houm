@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from houmers.models import Property
+from houmers.permissions import IsAdminHoumer
 from houmers.serializers import LocationSerializer, TimeIntervalSerializer, ReportsMoveParams, PropertySerializer, \
     ReportsVisitParams, VisitSerializer
 from houmers.services import ReportsService
@@ -13,6 +14,10 @@ from houmers.services import ReportsService
 
 class HoumersBaseView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+
+
+class HoumersAdminBaseView(APIView):
+    permission_classes = [permissions.IsAuthenticated, IsAdminHoumer]
 
 
 class StatusView(HoumersBaseView):
@@ -41,7 +46,7 @@ class LocationView(HoumersBaseView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class PropertyList(HoumersBaseView):
+class PropertyList(HoumersAdminBaseView):
 
     @swagger_auto_schema(
         operation_description='List all the properties',
@@ -67,7 +72,7 @@ class PropertyList(HoumersBaseView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class PropertyDetail(HoumersBaseView):
+class PropertyDetail(HoumersAdminBaseView):
 
     def _get_object(self, pk):
         try:
@@ -109,7 +114,7 @@ class PropertyDetail(HoumersBaseView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class ReportsMoveView(HoumersBaseView):
+class ReportsMoveView(HoumersAdminBaseView):
 
     @swagger_auto_schema(
         operation_description='List all times where the Houmer moved faster than the specified speed',
@@ -144,7 +149,7 @@ class ReportsMoveView(HoumersBaseView):
         return Response(s_result.data, status=status.HTTP_200_OK)
 
 
-class ReportsVisitView(HoumersBaseView):
+class ReportsVisitView(HoumersAdminBaseView):
 
     @swagger_auto_schema(
         operation_description='List all the properties the Houmer has visited',

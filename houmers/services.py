@@ -110,7 +110,7 @@ class ReportsService(object):
                         if actual_prop.pk == prop.pk:
                             interval_to = location.date
                         else:
-                            result.append({'prop': prop, 'date_from': interval_from, 'date_to': interval_to})
+                            result.append({'prop': actual_prop, 'date_from': interval_from, 'date_to': interval_to})
                             actual_prop = prop
                             interval_from = location.date
                             interval_to = location.date

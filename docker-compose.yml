@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:11.14
+    volumes:
+      - houm_db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      SECRET_KEY: "django-insecure-oPvsdj984587hfnq904L3n8cGKJU8wn03cTnu5rq802nu3rTcqAAn23"
+      DATABASE_URL: "postgres://postgres:postgres@db:5432/postgres"
+
+volumes:
+  houm_db_data:

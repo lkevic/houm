@@ -51,8 +51,10 @@ class ReportsMoveParams(serializers.Serializer):
     user = serializers.CharField(max_length=150)
     date = serializers.DateField()
     speed = serializers.FloatField()
+    timezone = serializers.RegexField('^(?:Z|[+-](?:2[0-3]|[01][0-9])[0-5][0-9])$', default='+0000')
 
 
 class ReportsVisitParams(serializers.Serializer):
     user = serializers.CharField(max_length=150)
     date = serializers.DateField()
+    timezone = serializers.RegexField('^(?:Z|[+-](?:2[0-3]|[01][0-9])[0-5][0-9])$', default='+0000')

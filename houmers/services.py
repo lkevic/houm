@@ -11,8 +11,8 @@ class ReportsService(object):
 
         data = params_serializer.validated_data
         username: str = data['user']
-        date_from: str = data['date'].strftime('%Y-%m-%d') + ' 00:00:00.000000'
-        date_to: str = data['date'].strftime('%Y-%m-%d') + ' 23:59:59.999999'
+        date_from: str = data['date'].strftime('%Y-%m-%d') + ' 00:00:00.000000' + data['timezone']
+        date_to: str = data['date'].strftime('%Y-%m-%d') + ' 23:59:59.999999' + data['timezone']
         minimum_speed: float = data['speed']
 
         if not HoumerUser.objects.filter(username=username).exists():
@@ -63,8 +63,8 @@ class ReportsService(object):
 
         data = params_serializer.validated_data
         username: str = data['user']
-        date_from: str = data['date'].strftime('%Y-%m-%d') + ' 00:00:00.000000'
-        date_to: str = data['date'].strftime('%Y-%m-%d') + ' 23:59:59.999999'
+        date_from: str = data['date'].strftime('%Y-%m-%d') + ' 00:00:00.000000' + data['timezone']
+        date_to: str = data['date'].strftime('%Y-%m-%d') + ' 23:59:59.999999' + data['timezone']
 
         if not HoumerUser.objects.filter(username=username).exists():
             raise ValidationError("Invalid username")

@@ -137,6 +137,12 @@ class ReportsMoveView(HoumersAdminBaseView):
                 type=openapi.TYPE_NUMBER,
                 required=True,
                 description="Minimum speed"),
+            openapi.Parameter(
+                name="timezone",
+                in_=openapi.IN_QUERY,
+                type=openapi.TYPE_STRING,
+                required=False,
+                description="Timezone offset from GMT. Examples: +0000, -0300, +0300."),
         ],
         responses={
             status.HTTP_200_OK: TimeIntervalSerializer(many=True)
@@ -165,7 +171,13 @@ class ReportsVisitView(HoumersAdminBaseView):
                 in_=openapi.IN_QUERY,
                 type=openapi.TYPE_STRING,
                 required=True,
-                description="Date of report. Format 'YYYY-MM-DD'")
+                description="Date of report. Format 'YYYY-MM-DD'"),
+            openapi.Parameter(
+                name="timezone",
+                in_=openapi.IN_QUERY,
+                type=openapi.TYPE_STRING,
+                required=False,
+                description="Timezone offset from GMT. Examples: +0000, -0300, +0300."),
         ],
         responses={
             status.HTTP_200_OK: VisitSerializer(many=True)

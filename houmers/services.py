@@ -7,6 +7,8 @@ from houmers.serializers import TimeIntervalSerializer, ReportsMoveParams, Visit
 
 class ReportsService(object):
 
+    _MINIMUM_INTERVAL_SECONDS = 30
+
     def get_move_intervals(self, params_serializer: ReportsMoveParams) -> TimeIntervalSerializer:
 
         data = params_serializer.validated_data
@@ -32,6 +34,8 @@ class ReportsService(object):
         interval_from = None
         interval_to = None
         for location in locations:
+            if (location.date - d_from.date).total_seconds() < self._MINIMUM_INTERVAL_SECONDS:
+                continue
             speed = GISHelper.calculate_speed_kph(
                 p1_latitude=d_from.latitude,
                 p1_longitude=d_from.longitude,
@@ -58,6 +62,20 @@ class ReportsService(object):
         s_result = TimeIntervalSerializer(data=result, many=True)
         s_result.is_valid()
         return s_result
+
+    def _location_is_in_prop(self, location, prop) -> bool:
+        if location.latitude > prop.max_latitude or location.latitude < prop.min_latitude \
+                or location.longitude > prop.max_longitude or location.longitude < prop.min_longitude:
+            return False
+        dist = GISHelper.calculate_distance_mts(
+            p1_latitude=prop.latitude,
+            p1_longitude=prop.longitude,
+            p1_altitude=None,
+            p2_latitude=location.latitude,
+            p2_longitude=location.longitude,
+            p2_altitude=None,
+        )
+        return dist <= prop.tolerance_radius
 
     def get_visits(self, params_serializer: ReportsVisitParams) -> VisitSerializer:
 
@@ -89,18 +107,14 @@ class ReportsService(object):
         interval_from = None
         interval_to = None
         actual_prop = None
+        d_from = None
         for location in locations:
+            if d_from is not None and (location.date - d_from.date).total_seconds() < self._MINIMUM_INTERVAL_SECONDS:
+                continue
+            d_from = location
             in_prop = False
             for prop in properties:
-                dist = GISHelper.calculate_distance_mts(
-                    p1_latitude=prop.latitude,
-                    p1_longitude=prop.longitude,
-                    p1_altitude=None,
-                    p2_latitude=location.latitude,
-                    p2_longitude=location.longitude,
-                    p2_altitude=None,
-                )
-                if dist <= prop.tolerance_radius:
+                if self._location_is_in_prop(location, prop):
                     in_prop = True
                     if actual_prop is None:
                         actual_prop = prop

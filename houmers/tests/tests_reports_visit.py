@@ -49,6 +49,14 @@ class ReportsVisitTestCase(HoumBaseTestCase):
         locations = [
             {"latitude": loc_d_0[0], "longitude": loc_d_0[1], "altitude": 0, "date": "2022-01-31T00:00:00.000000Z"},
             {"latitude": loc_a_2[0], "longitude": loc_a_2[1], "altitude": 0, "date": "2022-01-31T00:30:00.000000Z"},
+
+            # Ignored
+            {"latitude": loc_b_1[0], "longitude": loc_b_1[1], "altitude": 0, "date": "2022-01-31T00:30:00.100000Z"},
+            {"latitude": loc_b_1[0], "longitude": loc_b_1[1], "altitude": 0, "date": "2022-01-31T00:30:00.100000Z"},
+            {"latitude": loc_b_1[0], "longitude": loc_b_1[1], "altitude": 0, "date": "2022-01-31T00:30:00.200000Z"},
+            {"latitude": loc_b_1[0], "longitude": loc_b_1[1], "altitude": 0, "date": "2022-01-31T00:30:00.200000Z"},
+            # End ignored
+
             {"latitude": loc_a_1[0], "longitude": loc_a_1[1], "altitude": 0, "date": "2022-01-31T01:00:00.000000Z"},
             {"latitude": loc_a_2[0], "longitude": loc_a_2[1], "altitude": 0, "date": "2022-01-31T01:30:00.000000Z"},
             {"latitude": loc_a_2[0], "longitude": loc_a_2[1], "altitude": 0, "date": "2022-01-31T02:00:00.000000Z"},

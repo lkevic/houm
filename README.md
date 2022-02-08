@@ -62,11 +62,13 @@ para verificar el estado del servicio y un módulo de documentación online
 * Se considera que un Houmer está en una propiedad si sus coordenadas son interiores a una propiedad.
 * Si varias propiedades tienen zonas internas compartidas (intersección) y un Houmer se encuentra en una de esas zonas, el servicio devolverá la primera propiedad que encuentre.
 * Se considera el tiempo de permanencia desde el primer reporte dentro de la propiedad hasta el último reporte dentro de la propiedad. Si existe un solo reporte dentro de los límites de la propiedad el tiempo de permanencia será 0.
+* El reporte tiene en cuenta locaciones con más de 30 segundos de diferencia. Las locaciones con menos de 30 segundos serán descartadas para este reporte. De manera que la precisión del reporte será de +- 30 segundos.  
 
 #### Punto 3
 
 * La velocidad se expresa en Kilómetros por hora.
 * Para el cálculo de velocidad se tiene en cuenta el desplazamiento sobre la longitud, la latitud y la altura.
+* El reporte tiene en cuenta locaciones con más de 30 segundos de diferencia. Las locaciones con menos de 30 segundos serán descartadas para este reporte. De manera qeu la precisión del reporte será de +- 30 segundos.
 
 ## Requerimientos
 
